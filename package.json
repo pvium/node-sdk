@@ -1,0 +1,22 @@
+{
+  "name": "@dephizee/pvium-sdk",
+  "version": "0.1.3",
+  "description": "TypeScript SDK for the Pvium API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "pvium",
+    "sdk",
+    "typescript",
+    "openapi"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}
