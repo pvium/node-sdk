@@ -63,6 +63,69 @@ Optional config:
 - `getInvoiceStatus(code)`
 - `getInstallmentPayments(id)`
 
+## SmartEscrow Signing Utilities
+
+The SDK now includes signing helpers that mirror the hashing/signature patterns used in SmartEscrow tests.
+
+### Supported Helpers
+
+- `signCreateProjectRequest(payload, signerOrPrivateKey, options)`
+- `signCreateProjectAttestation(appSignature, signerOrPrivateKey, chainId)`
+- `signCreateClaimRequest(payload, signerOrPrivateKey)`
+- `signFinalizeClaimRequest(claims, signerOrPrivateKey, chainId)`
+- `signRelayedCallRequest(payload, signerOrPrivateKey)`
+- `signDisputeRequest(claimId, signerOrPrivateKey, chainId)`
+- `signResolveDisputeRequest(payload, signerOrPrivateKey)`
+
+### Private Key Example
+
+```ts
+import {
+  signCreateClaimRequest,
+  signCreateProjectRequest,
+} from "@dephizee/pvium-sdk";
+
+const privateKey = process.env.APP_PRIVATE_KEY as string;
+const chainId = 84532n;
+
+const projectSignature = await signCreateProjectRequest(
+  {
+    app: "test-app",
+    projectId: "project-001",
+    metadata: "ipfs://Qm...",
+    tokenAddress: "0x0000000000000000000000000000000000000001",
+    refundAddress: "0x0000000000000000000000000000000000000002",
+    appFeeAddress: "0x0000000000000000000000000000000000000003",
+    appAdminAddress: "0x0000000000000000000000000000000000000004",
+    appFeeBps: 200,
+    disputeWindowSeconds: 259200,
+    lockDuration: 7776000,
+    minimumBalancePerVendor: 100000000n,
+  },
+  privateKey,
+  {
+    pviumFeeBps: 100,
+    chainId,
+  },
+);
+
+const claimSignature = await signCreateClaimRequest(
+  {
+    app: "test-app",
+    projectId: "project-001",
+    claimId: "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    receiver: "0x0000000000000000000000000000000000000005",
+    amount: 100000000n,
+    claimableAfter: Math.floor(Date.now() / 1000),
+    claimDeadline: 0,
+    nonce: 0,
+  },
+  privateKey,
+);
+
+console.log(projectSignature, claimSignature);
+```
+
 ## Real Network Tests
 
 Integration tests in `test/endpoints.test.js` call real endpoints (no mocked responses).

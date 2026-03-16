@@ -7,6 +7,39 @@ export type {
   InstallmentPayment,
   InvoiceStatusResponse,
 } from "./types";
+export {
+  PVIUM_SIGNATURE_DOMAIN,
+  createSignerFromPrivateKey,
+  hashAbiEncodedPayload,
+  hashCreateClaimRequest,
+  hashCreateProjectAttestation,
+  hashCreateProjectRequest,
+  hashDisputeRequest,
+  hashFinalizeClaimRequest,
+  hashRelayedCallRequest,
+  hashResolveDisputeRequest,
+  signCreateClaimRequest,
+  signCreateProjectAttestation,
+  signCreateProjectRequest,
+  signDisputeRequest,
+  signFinalizeClaimRequest,
+  signMessageHash,
+  signRelayedCallRequest,
+  signResolveDisputeRequest,
+  signatureDomainFromText,
+} from "./signing";
+export type {
+  CreateClaimRequestPayload,
+  CreateProjectRequestPayload,
+  CreateProjectSignatureOptions,
+  FinalizeClaimRequestPayload,
+  HexString,
+  MessageSigner,
+  Numeric,
+  RelayedCallRequestPayload,
+  ResolveDisputeRequestPayload,
+  SignerInput,
+} from "./signing";
 
 export class PviumSdk {
   readonly http: PviumHttpClient;
